@@ -29,11 +29,11 @@ class AnkioMail
      */
     static function send(string $mailto, string $subject, string $content, string $fromname, $debug = false)
     {
-        $config = Config::getConfig('sso');
-        if (!empty($config)) {
-           return AnkioApi::sendMail($mailto, $subject, $content, $fromname);
+        $config = Config::getConfig('notice');
+        if (!isset($config["sso"]) || !$config["sso"]) {
+            return (new Email())->send($mailto, $subject, $content, $fromname, $debug ? 1 : 0);
         }
-        return (new Email())->send($mailto, $subject, $content, $fromname, $debug ? 1 : 0);
+        return AnkioApi::sendMail($mailto, $subject, $content, $fromname);
     }
 
     static function compileNotify($bg_color, $color, $logo, $site_name, $title, $body): string

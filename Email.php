@@ -19,11 +19,11 @@ class Email
 
     public function __construct()
     {
-        $conf = Config::getConfig("mail");
-        $this->smtp = $conf["smtp"];
-        $this->port = $conf["port"];
-        $this->sendmail = $conf["send"];
-        $this->password = $conf["passwd"];
+        $conf = new MailConfig(Config::getConfig("notice"),false);
+        $this->smtp = $conf->smtp;
+        $this->port = $conf->port;
+        $this->sendmail = $conf->user;
+        $this->password = $conf->password;
 
     }
 
